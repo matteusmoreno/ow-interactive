@@ -33,4 +33,12 @@ public class TransactionController {
 
         return ResponseEntity.created(uri).body(new TransactionDetailsResponse(transaction));
     }
+
+    @PostMapping("/debit")
+    public ResponseEntity<TransactionDetailsResponse> debitTransaction(@RequestBody @Valid CreateTransactionRequest request, UriComponentsBuilder uriBuilder) {
+        Transaction transaction = transactionService.debitTransaction(request);
+        URI uri = uriBuilder.path("/transactions/debit/{id}").buildAndExpand(transaction.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new TransactionDetailsResponse(transaction));
+    }
 }
