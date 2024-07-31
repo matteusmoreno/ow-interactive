@@ -1,6 +1,7 @@
 package br.com.matteusmoreno.ow_interactive.service;
 
 import br.com.matteusmoreno.ow_interactive.entity.User;
+import br.com.matteusmoreno.ow_interactive.exception.UserNotFoundException;
 import br.com.matteusmoreno.ow_interactive.repository.UserRepository;
 import br.com.matteusmoreno.ow_interactive.request.CreateUserRequest;
 import br.com.matteusmoreno.ow_interactive.response.UserDetailsResponse;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
@@ -34,5 +36,17 @@ public class UserService {
 
     public Page<UserDetailsResponse> findAll(Pageable pageable) {
         return userRepository.findAll(pageable).map(UserDetailsResponse::new);
+    }
+
+    public User userDetails(Long id) {
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Transactional
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException();
+        }
+        userRepository.deleteById(id);
     }
 }

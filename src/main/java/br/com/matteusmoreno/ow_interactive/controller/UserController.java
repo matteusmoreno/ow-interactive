@@ -40,4 +40,18 @@ public class UserController {
 
         return ResponseEntity.ok(page);
     }
+
+    @GetMapping("/details/{id}")
+    public ResponseEntity<UserDetailsResponse> details(@PathVariable Long id) {
+        User user = userService.userDetails(id);
+
+        return ResponseEntity.ok(new UserDetailsResponse(user));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.deleteUser(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
