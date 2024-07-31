@@ -5,8 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -19,6 +22,9 @@ public class User {
     private String name;
     private String email;
     private LocalDate birthday;
+    private BigDecimal balance;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Transaction> transactions = new ArrayList<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

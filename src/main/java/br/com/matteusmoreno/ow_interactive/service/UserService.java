@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
@@ -30,6 +31,7 @@ public class UserService {
         User user = new User();
         BeanUtils.copyProperties(request, user);
         user.setCreatedAt(LocalDateTime.now());
+        user.setBalance(BigDecimal.ZERO);
 
         return userRepository.save(user);
     }
