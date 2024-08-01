@@ -152,4 +152,4 @@ Este projeto é licenciado sob a [MIT License](LICENSE).
 
 ---
 
-Desenvolvido por [Matteus Moreno](https://github.com/seu-usuario).
+Desenvolvido por [Matteus Moreno](https://github.com/matteusmoreno).
