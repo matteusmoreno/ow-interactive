@@ -2,6 +2,7 @@ package br.com.matteusmoreno.ow_interactive.service;
 
 import br.com.matteusmoreno.ow_interactive.entity.User;
 import br.com.matteusmoreno.ow_interactive.exception.UserNotFoundException;
+import br.com.matteusmoreno.ow_interactive.mapper.UserMapper;
 import br.com.matteusmoreno.ow_interactive.repository.UserRepository;
 import br.com.matteusmoreno.ow_interactive.request.CreateUserRequest;
 import br.com.matteusmoreno.ow_interactive.response.UserDetailsResponse;
@@ -20,19 +21,17 @@ import java.util.NoSuchElementException;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Transactional
     public User createUser(CreateUserRequest request) {
-        User user = new User();
-        BeanUtils.copyProperties(request, user);
-        user.setCreatedAt(LocalDateTime.now());
-        user.setBalance(BigDecimal.ZERO);
-
+        User user = userMapper.createUserBuilder(request);
         return userRepository.save(user);
     }
 

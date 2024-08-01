@@ -2,16 +2,16 @@ package br.com.matteusmoreno.ow_interactive.entity;
 
 import br.com.matteusmoreno.ow_interactive.constant.TransactionType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transactions")
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter @Setter
 public class Transaction {
 

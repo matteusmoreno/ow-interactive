@@ -22,4 +22,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleTransactionNotFoundException(TransactionNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(TransactionOwnershipException.class)
+    public ResponseEntity<String> handleTransactionOwnershipException(TransactionOwnershipException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TransactionAlreadyReversedException.class)
+    public ResponseEntity<String> handleTransactionAlreadyReversedException(TransactionAlreadyReversedException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
