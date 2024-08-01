@@ -1,16 +1,17 @@
 package br.com.matteusmoreno.ow_interactive.controller;
 
 import br.com.matteusmoreno.ow_interactive.entity.Transaction;
+import br.com.matteusmoreno.ow_interactive.request.CreateReversalTransactionRequest;
 import br.com.matteusmoreno.ow_interactive.request.CreateTransactionRequest;
 import br.com.matteusmoreno.ow_interactive.response.TransactionDetailsResponse;
 import br.com.matteusmoreno.ow_interactive.service.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -40,5 +41,20 @@ public class TransactionController {
         URI uri = uriBuilder.path("/transactions/debit/{id}").buildAndExpand(transaction.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new TransactionDetailsResponse(transaction));
+    }
+
+    @PostMapping("/reversal")
+    public ResponseEntity<TransactionDetailsResponse> reversalTransaction(@RequestBody @Valid CreateReversalTransactionRequest request, UriComponentsBuilder uriBuilder) {
+        Transaction transaction = transactionService.reversalTransaction(request);
+        URI uri = uriBuilder.path("/transactions/reversal/{id}").buildAndExpand(transaction.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new TransactionDetailsResponse(transaction));
+    }
+
+    @GetMapping("/find-all-by-user/{id}")
+    public ResponseEntity<Page<TransactionDetailsResponse>> findAll(@PathVariable Long id, @PageableDefault(sort = "createdAt", size = 10) Pageable pageable) {
+        var page = transactionService.findAll(id, pageable);
+
+        return ResponseEntity.ok(page);
     }
 }

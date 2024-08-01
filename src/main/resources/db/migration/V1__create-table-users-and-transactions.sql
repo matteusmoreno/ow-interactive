@@ -13,8 +13,9 @@ CREATE TABLE transactions (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     value DECIMAL(19, 2) NOT NULL,
     transaction_type ENUM('CREDIT', 'DEBIT', 'REVERSAL') NOT NULL,
-    user_id BIGINT,
-    created_at TIMESTAMP,
+    user_id BIGINT NOT NULL,
+    reversal BOOLEAN NOT NULL,
+    created_at TIMESTAMP NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES users(id)
 );

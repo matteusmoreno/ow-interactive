@@ -12,6 +12,7 @@ public record TransactionDetailsResponse(
         TransactionType transactionType,
         String userName,
         BigDecimal balance,
+        Boolean reversal,
         LocalDateTime createdAt) {
 
     public TransactionDetailsResponse(Transaction transaction) {
@@ -21,6 +22,7 @@ public record TransactionDetailsResponse(
                 transaction.getTransactionType(),
                 transaction.getUser().getName(),
                 transaction.getUser().getBalance(),
+                transaction.getReversal(),
                 transaction.getCreatedAt()
         );
     }

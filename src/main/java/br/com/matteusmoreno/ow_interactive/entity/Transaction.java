@@ -22,5 +22,6 @@ public class Transaction {
     private TransactionType transactionType;
     @ManyToOne
     private User user;
+    private Boolean reversal;
     private LocalDateTime createdAt;
 }
